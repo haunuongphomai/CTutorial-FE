@@ -12,8 +12,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LandingPageComponent } from './landing-page/landing-page.component';
+import { HomePageComponent } from './home-page/home-page.component';
 @NgModule({
-  declarations: [AppComponent, SignInComponent, SignUpComponent, LandingPageComponent],
+  declarations: [AppComponent, SignInComponent, SignUpComponent, LandingPageComponent, HomePageComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

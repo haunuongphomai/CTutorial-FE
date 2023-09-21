@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-in',
@@ -10,7 +11,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class SignInComponent implements OnInit {
   loginForm!: FormGroup;
 
-  constructor(private fb: FormBuilder, private auth: AuthService) {}
+  constructor(
+    private fb: FormBuilder,
+    private auth: AuthService,
+    private route: Router
+  ) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -23,7 +28,7 @@ export class SignInComponent implements OnInit {
     if (this.loginForm.valid) {
       this.auth.signIn(this.loginForm.value).subscribe({
         next: (res) => {
-          alert(res.message);
+          this.route.navigate(['/home-page']);
         },
         error: (err) => {
           alert(err?.error.message);

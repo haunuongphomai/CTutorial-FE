@@ -6,6 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import { Route, Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -16,7 +17,11 @@ export class SignUpComponent implements OnInit {
   registerForm!: FormGroup;
   isMatch: boolean = true;
 
-  constructor(private fb: FormBuilder, private auth: AuthService) {}
+  constructor(
+    private fb: FormBuilder,
+    private auth: AuthService,
+    private route: Router
+  ) {}
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
@@ -41,7 +46,7 @@ export class SignUpComponent implements OnInit {
       }
       this.auth.signUp(this.registerForm.value).subscribe({
         next: (res) => {
-          alert(res.message);
+          this.route.navigate(['/sign-in']);
         },
         error: (err) => {
           alert(err?.error.message);
