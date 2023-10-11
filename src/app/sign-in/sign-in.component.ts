@@ -19,7 +19,7 @@ export class SignInComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      email: ['', Validators.required],
+      username: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
@@ -28,7 +28,13 @@ export class SignInComponent implements OnInit {
     if (this.loginForm.valid) {
       this.auth.signIn(this.loginForm.value).subscribe({
         next: (res) => {
-          this.route.navigate(['/home-page']);
+          if (res) {
+            localStorage.setItem(
+              'currentUser',
+              JSON.stringify({ token: res.token })
+            );
+            this.route.navigate(['/home-page']);
+          }
         },
         error: (err) => {
           alert(err?.error.message);
