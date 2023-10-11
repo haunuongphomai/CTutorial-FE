@@ -1,18 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { authUrl } from 'src/environments/environment.development';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl: string = 'https://localhost:7171/api/Users/';
   constructor(private http: HttpClient) {}
 
   signUp(users: any) {
-    return this.http.post<any>(`${this.baseUrl}register`, users);
+    return this.http.post<any>(`${authUrl}register`, users);
   }
 
   signIn(users: any) {
-    return this.http.post<any>(`${this.baseUrl}authenticate`, users);
+    return this.http.post<any>(`${authUrl}login`, users);
   }
 }

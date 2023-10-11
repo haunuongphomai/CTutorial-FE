@@ -13,8 +13,15 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { HomePageComponent } from './home-page/home-page.component';
+import { ToastrModule } from 'ngx-toastr';
 @NgModule({
-  declarations: [AppComponent, SignInComponent, SignUpComponent, LandingPageComponent, HomePageComponent],
+  declarations: [
+    AppComponent,
+    SignInComponent,
+    SignUpComponent,
+    LandingPageComponent,
+    HomePageComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -23,6 +30,7 @@ import { HomePageComponent } from './home-page/home-page.component';
     MatIconModule,
     HttpClientModule,
     ReactiveFormsModule,
+    ToastrModule.forRoot(),
   ],
   providers: [],
   bootstrap: [AppComponent],

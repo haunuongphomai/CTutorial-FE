@@ -6,7 +6,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { ToastrModule, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-sign-up',
@@ -20,13 +21,13 @@ export class SignUpComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
-    private route: Router
+    private route: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.registerForm = this.fb.group({
-      firstName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      username: ['', Validators.required],
       email: ['', Validators.required],
       password: ['', Validators.required],
       confPassword: ['', Validators.required],
@@ -46,6 +47,10 @@ export class SignUpComponent implements OnInit {
       }
       this.auth.signUp(this.registerForm.value).subscribe({
         next: (res) => {
+          this.toastr.success('Đăng kí thành công', 'Thông báo', {
+            timeOut: 1000,
+            positionClass: 'toast-bottom-right',
+          });
           this.route.navigate(['/sign-in']);
         },
         error: (err) => {

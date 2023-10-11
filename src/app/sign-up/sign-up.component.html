@@ -4,7 +4,7 @@
       <div class="col col-xl-10 w-75">
         <div class="card">
           <div class="row g-0">
-            <div class="col-md-6 col-lg-7 d-flex align-items-center">
+            <div class="col-md-12 col-lg-12 d-flex align-items-center">
               <div class="card-body p-4 p-lg-5 text-black border">
                 <form [formGroup]="registerForm">
                   <div class="d-flex align-items-center">
@@ -12,27 +12,27 @@
                       alt="Logo CTU" loading="lazy">
                     <span class="h1 fw-bold mb-0">ĐĂNG KÍ</span>
                   </div>
-                  <div class="form-outline mb-4">
+                  <!-- <div class="form-outline mb-4">
                     <label class="form-label">Tên</label>
                     <input formControlName="firstName" type="text" class="form-control form-control-lg" />
+                  </div> -->
+                  <div class="form-outline mb-2">
+                    <label class="form-label">Tên người dùng</label>
+                    <input formControlName="username" type="text" class="form-control form-control-lg" />
                   </div>
-                  <div class="form-outline mb-4">
-                    <label class="form-label">Họ</label>
-                    <input formControlName="lastName" type="text" class="form-control form-control-lg" />
-                  </div>
-                  <div class="form-outline mb-4">
+                  <div class="form-outline mb-2">
                     <label class="form-label">Email</label>
                     <input formControlName="email" type="email" class="form-control form-control-lg" />
                   </div>
-                  <div class="form-outline mb-4">
+                  <div class="form-outline mb-2">
                     <label class="form-label">Mật khẩu</label>
                     <input formControlName="password" type="password" class="form-control form-control-lg" />
                   </div>
-                  <div class="form-outline mb-4">
+                  <div class="form-outline mb-2">
                     <label class="form-label">Nhập lại mật khẩu</label>
                     <input formControlName="confPassword" type="password" class="form-control form-control-lg" />
                   </div>
-                  <div class="pt-1 mb-4">
+                  <div class="pt-1 mb-2">
                     <button [disabled]="registerForm.invalid" class="btn btn-dark btn-lg btn-block"
                       (click)="onRegister()" type="button">Đăng kí</button>
                   </div>
@@ -41,10 +41,7 @@
                 </form>
               </div>
             </div>
-            <div class="col-md-6 col-lg-5 d-md-block justify-content-center align-self-center">
-              <img src="https://www.britefish.net/wp-content/uploads/2019/07/logo-c-1.png" alt="register form"
-                class="img-fluid bg" loading="lazy" />
-            </div>
+
           </div>
         </div>
       </div>

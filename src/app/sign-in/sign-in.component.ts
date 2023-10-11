@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Route, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-sign-in',
@@ -14,12 +15,13 @@ export class SignInComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
-    private route: Router
+    private route: Router,
+    private toastr: ToastrService
   ) {}
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      email: ['', Validators.required],
+      username: ['', Validators.required],
       password: ['', Validators.required],
     });
   }
@@ -28,6 +30,16 @@ export class SignInComponent implements OnInit {
     if (this.loginForm.valid) {
       this.auth.signIn(this.loginForm.value).subscribe({
         next: (res) => {
+          if (res) {
+            localStorage.setItem(
+              'currentUser',
+              JSON.stringify({ token: res.token })
+            );
+            this.toastr.success('Đăng nhập thành công', 'Thông báo', {
+              timeOut: 1000,
+              positionClass: 'toast-bottom-right',
+            });
+          }
           this.route.navigate(['/home-page']);
         },
         error: (err) => {
