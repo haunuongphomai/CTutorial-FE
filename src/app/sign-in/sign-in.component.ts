@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -15,8 +15,8 @@ export class SignInComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
-    private route: Router,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    private route: Router
   ) {}
 
   ngOnInit(): void {
@@ -39,11 +39,14 @@ export class SignInComponent implements OnInit {
               timeOut: 1000,
               positionClass: 'toast-bottom-right',
             });
+            this.route.navigate(['/home-page']);
           }
-          this.route.navigate(['/home-page']);
         },
         error: (err) => {
-          alert(err?.error.message);
+          this.toastr.error(err, 'Lỗi', {
+            timeOut: 1000,
+            positionClass: 'toast-bottom-right',
+          });
         },
       });
     }

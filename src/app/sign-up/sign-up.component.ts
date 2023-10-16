@@ -40,21 +40,28 @@ export class SignUpComponent implements OnInit {
 
     if (this.registerForm.valid) {
       if (confPassword != password) {
-        this.isMatch = false;
-        this.registerForm.get('password')?.setValue('');
-        this.registerForm.get('confPassword')?.setValue('');
+        this.toastr.error('Mật khẩu không khớp', 'Lỗi', {
+          timeOut: 1000,
+          positionClass: 'toast-bottom-right',
+        });
         return;
       }
       this.auth.signUp(this.registerForm.value).subscribe({
         next: (res) => {
-          this.toastr.success('Đăng kí thành công', 'Thông báo', {
+          if (res && res.data) {
+            this.toastr.success('Đăng kí thành công', 'Thông báo', {
+              timeOut: 1000,
+              positionClass: 'toast-bottom-right',
+            });
+            this.route.navigate(['/sign-in']);
+          }
+        },
+        error: (err) => {
+          console.log(err);
+          this.toastr.error(err.error.message, 'Lỗi', {
             timeOut: 1000,
             positionClass: 'toast-bottom-right',
           });
-          this.route.navigate(['/sign-in']);
-        },
-        error: (err) => {
-          alert(err?.error.message);
         },
       });
     }

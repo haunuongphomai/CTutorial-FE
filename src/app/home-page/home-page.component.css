@@ -1,0 +1,14 @@
+ .mat-drawer-container {
+     height: 100%;
+ }
+
+ .mat-drawer {
+     border-top-right-radius: 15px;
+     border-bottom-right-radius: 15px;
+     min-width: 250px;
+     border-top: 0.1px solid;
+     border-bottom: 0.1px solid;
+     border-right: 0.1px solid;
+     padding: 5px;
+     margin: 5px 0px 5px 0px;
+ }
