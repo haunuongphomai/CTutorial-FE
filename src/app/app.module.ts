@@ -1,3 +1,4 @@
+import { TooltipModule } from '@syncfusion/ej2-angular-popups';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -16,7 +17,19 @@ import { HomePageComponent } from './home-page/home-page.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { ToastrModule } from 'ngx-toastr';
-
+import { MatCardModule } from '@angular/material/card';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import {
+  AlertModule,
+  CarouselModule,
+  ModalBodyComponent,
+  ModalComponent,
+  ModalFooterComponent,
+  ModalHeaderComponent,
+  ModalModule,
+  ToastModule,
+} from '@coreui/angular';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,6 +49,15 @@ import { ToastrModule } from 'ngx-toastr';
     ToastrModule.forRoot(),
     MatSidenavModule,
     MatButtonModule,
+    MatCardModule,
+    MatToolbarModule,
+    MatTooltipModule,
+    AlertModule,
+    CarouselModule,
+    ModalComponent,
+    ModalHeaderComponent,
+    ModalBodyComponent,
+    ModalFooterComponent,
   ],
   providers: [],
   bootstrap: [AppComponent],

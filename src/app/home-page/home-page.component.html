@@ -1,8 +1,61 @@
-<div class="w-100 h-100 p-3">
+<div class="w-100 toolbar">
+    <mat-toolbar class="mat-elevation-z8 position-relative" fxLayout="row" fxLayoutAlign="start stretch"
+        style="z-index: 2">
+        <button mat-icon-button (click)="drawer.toggle()">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <h3>Xin chào, Hao!</h3>
+        <button mat-icon-button (click)="logout()" matTooltip="Đăng xuất" class="position-absolute top-0 end-0" cButton>
+            <mat-icon class="mt-1">exit_to_app</mat-icon>
+        </button>
+    </mat-toolbar>
+</div>
+<div class="w-100 h-75">
     <mat-drawer-container>
-        <mat-drawer #drawer [mode]="'push'">I'm a drawer</mat-drawer>
+        <mat-drawer #drawer [mode]="'over'" class="bg-dark bg-gradient bg-opacity-20 text-light">
+            <div class="header mt-3">
+                <h3>C Tutorial</h3>
+            </div>
+            <div class="mt-2">
+                <p class="item-nav p-2">HOME</p>
+                <p class="item-nav p-2">Intro</p>
+            </div>
+        </mat-drawer>
         <mat-drawer-content>
-            <button mat-raised-button class="m-3" (click)="drawer.toggle()">Toggle drawer</button>
+            <div class="container-xxl mt-3 d-flex justify-content-center">
+                <c-carousel [dark]="true" [wrap]="false" class="w-75 justify">
+                    <c-carousel-inner>
+                        <c-carousel-item *ngFor="let slide of slides; index as i;">
+                            <div class="row border border-secondary intro">
+                                <div class="col-md-5">
+                                    <img [src]="slide.src" class="d-block w-75" loading="lazy" />
+                                </div>
+                                <div class="col-md-7 align-self-center">
+                                    <h2>{{slide.title}}</h2>
+                                    <p>{{slide.subtitle}}</p>
+                                </div>
+                            </div>
+                        </c-carousel-item>
+                    </c-carousel-inner>
+                    <c-carousel-control [routerLink] caption="Previous" direction="prev"></c-carousel-control>
+                    <c-carousel-control [routerLink] caption="Next" direction="next"></c-carousel-control>
+                </c-carousel>
+            </div>
         </mat-drawer-content>
     </mat-drawer-container>
 </div>
+
+<c-modal id="liveDemoModal" [visible]="visible">
+    <c-modal-header>
+        <h5 cModalTitle>Xác nhận</h5>
+        <button (click)="closeDialog()" cButtonClose>
+        </button>
+    </c-modal-header>
+    <c-modal-body>Bạn có muốn đăng xuất?</c-modal-body>
+    <c-modal-footer>
+        <button (click)="closeDialog()" class="btn btn-light">
+            Hủy
+        </button>
+        <button cButton (click)="acceptLogout()" class="btn btn-primary">Đồng ý</button>
+    </c-modal-footer>
+</c-modal>
