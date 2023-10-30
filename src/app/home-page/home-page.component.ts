@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { MatDrawerMode } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
+import { HomePageService } from '../services/homepage.service';
 
 @Component({
   selector: 'app-home-page',
@@ -16,7 +17,9 @@ export class HomePageComponent implements OnInit {
     subtitle: '',
   });
   isAccept: any = false;
-  constructor(private route: Router) {}
+  lessons: any[] = [];
+
+  constructor(private route: Router, private home: HomePageService) {}
 
   public visible = false;
 
@@ -49,6 +52,7 @@ export class HomePageComponent implements OnInit {
       subtitle:
         'Cung cấp trình biên dịch C hỗ trợ biên dịch mã đến từ người dùng.',
     };
+    this.getAllLessons();
   }
 
   acceptLogout() {
@@ -62,5 +66,15 @@ export class HomePageComponent implements OnInit {
 
   logout() {
     this.visible = !this.visible;
+  }
+
+  getAllLessons() {
+    this.home.getAllLessons().subscribe({
+      next: (res) => {
+        if (res) {
+          this.lessons = res;
+        }
+      },
+    });
   }
 }

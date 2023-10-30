@@ -1,17 +1,17 @@
  .mat-drawer-container {
      height: 100%;
-     overflow-y: hidden;
  }
 
  .mat-drawer {
-     border-top-right-radius: 15px;
-     border-bottom-right-radius: 15px;
+     /* border-top-right-radius: 15px;
+     border-bottom-right-radius: 15px; */
      min-width: 250px;
-     border-top: 0.1px solid;
-     border-bottom: 0.1px solid;
-     border-right: 0.1px solid;
-     padding: 15px;
-     margin: 25px 0px 5px 0px;
+     margin: 0px 0px 0px 0px;
+     overflow-y: hidden !important;
+ }
+
+ .mat-drawer::-webkit-scrollbar-thumb {
+     background: red !important;
  }
 
  .header h3 {
@@ -20,11 +20,11 @@
 
  .item-nav:hover {
      background-color: white;
-     opacity: 0.6;
+     opacity: 0.7;
      color: black;
      font-size: 15px;
      border-radius: 5px;
-     margin-left: 10px;
+     margin-left: 5px;
  }
 
  .toolbar mat-toolbar {
@@ -39,4 +39,8 @@
 
  .carousel-inner {
      padding: 20px;
+ }
+
+ .side-nav {
+     padding: 0px 130px 0px 15px;
  }
