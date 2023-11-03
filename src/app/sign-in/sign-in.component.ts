@@ -43,7 +43,7 @@ export class SignInComponent implements OnInit {
           }
         },
         error: (err) => {
-          this.toastr.error(err, 'Lỗi', {
+          this.toastr.error('Tên đăng nhập hoặc mật khẩu không đúng', 'Lỗi', {
             timeOut: 1000,
             positionClass: 'toast-bottom-right',
           });

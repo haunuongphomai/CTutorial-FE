@@ -5,13 +5,9 @@
  .mat-drawer {
      /* border-top-right-radius: 15px;
      border-bottom-right-radius: 15px; */
-     min-width: 250px;
+     min-width: 450px;
      margin: 0px 0px 0px 0px;
      overflow-y: hidden !important;
- }
-
- .mat-drawer::-webkit-scrollbar-thumb {
-     background: red !important;
  }
 
  .header h3 {
@@ -43,4 +39,8 @@
 
  .side-nav {
      padding: 0px 130px 0px 15px;
+ }
+
+ .content {
+     height: 93.7%;
  }

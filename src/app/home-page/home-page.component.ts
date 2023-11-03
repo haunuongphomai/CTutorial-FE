@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { MatDrawerMode } from '@angular/material/sidenav';
 import { Router } from '@angular/router';
 import { HomePageService } from '../services/homepage.service';
+import { HighlightService } from '../services/highlight.service';
 
 @Component({
   selector: 'app-home-page',
@@ -17,9 +18,17 @@ export class HomePageComponent implements OnInit {
     subtitle: '',
   });
   isAccept: any = false;
-  lessons: any[] = [];
+  highlighted: boolean = false;
+  sections: any[] = [];
+  htmlToAdd: string =
+    // '<pre><code class="lang-c"> </code></pre>';
+    '<h2>Get Started With C</h2><p>To start using C, you need two things:</p><ul><li>A text editor, like Notepad, to write C code</li><li>A compiler, like GCC, to translate the C code into a language that the computer will understand</li></ul><p>There are many text editors and compilers to choose from. In this tutorial, we will use an&nbsp;<strong><em>IDE&nbsp;</em></strong>(see below).</p><h1>Example:</h1><pre><code class="lang-c">#include &lt;stdio.h&gt;\n\nint main() {\n  printf("Hello World!");\n  return 0;\n}\n</code></pre>';
 
-  constructor(private route: Router, private home: HomePageService) {}
+  constructor(
+    private route: Router,
+    private home: HomePageService,
+    private highlightService: HighlightService
+  ) {}
 
   public visible = false;
 
@@ -29,6 +38,13 @@ export class HomePageComponent implements OnInit {
 
   handleLiveDemoChange(event: any) {
     this.visible = event;
+  }
+
+  ngAfterViewChecked() {
+    if (!this.highlighted) {
+      this.highlightService.highlightAll();
+      this.highlighted = true;
+    }
   }
 
   ngOnInit(): void {
@@ -53,6 +69,7 @@ export class HomePageComponent implements OnInit {
         'Cung cấp trình biên dịch C hỗ trợ biên dịch mã đến từ người dùng.',
     };
     this.getAllLessons();
+    this.highlightService.highlightAll();
   }
 
   acceptLogout() {
@@ -69,10 +86,10 @@ export class HomePageComponent implements OnInit {
   }
 
   getAllLessons() {
-    this.home.getAllLessons().subscribe({
+    this.home.getAllSectionsInfo().subscribe({
       next: (res) => {
         if (res) {
-          this.lessons = res;
+          this.sections = res;
         }
       },
     });

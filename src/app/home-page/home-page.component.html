@@ -12,21 +12,22 @@
             </button>
         </mat-toolbar>
     </div>
-    <div class="w-100 " style="height: 93.7%;">
+    <div class="w-100 content">
         <mat-drawer-container>
             <mat-drawer #drawer [mode]="'side'" class="bg-dark bg-gradient bg-opacity-20 text-light">
                 <div class="h-100 mt-4">
-                    <div *ngFor="let p of lessons" class="side-nav">
+                    <div *ngFor="let p of sections" class="side-nav">
                         <div class="header mt-3">
                             <h3>
                                 <i class="bi bi-book-fill"></i>
-                                {{p.lessonName}}
+                                {{p.sectionName}}
                             </h3>
                         </div>
-                        <div class="mt-2">
-                            <p class="item-nav p-2">{{p.section.sectionName}}</p>
+                        <div *ngFor="let p2 of p.lessons" class="mt-2">
+                            <p class="item-nav p-2">{{p2.lessonName}}</p>
                         </div>
                     </div>
+
                 </div>
             </mat-drawer>
             <mat-drawer-content>
@@ -49,11 +50,14 @@
                         <c-carousel-control [routerLink] caption="Next" direction="next"></c-carousel-control>
                     </c-carousel>
                 </div>
+                <div class="container-xxl d-flex justify-content-center">
+                    <div class="w-75 p-5 justify border" [innerHTML]="htmlToAdd"> </div>
+                </div>
             </mat-drawer-content>
         </mat-drawer-container>
     </div>
 
-    <c-modal id="liveDemoModal" [visible]="visible">
+    <c-modal [visible]="visible">
         <c-modal-header>
             <h2 cModalTitle>Xác nhận</h2>
         </c-modal-header>

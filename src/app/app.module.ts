@@ -27,9 +27,14 @@ import {
   ModalComponent,
   ModalFooterComponent,
   ModalHeaderComponent,
-  ModalModule,
-  ToastModule,
 } from '@coreui/angular';
+import { HighlightService } from './services/highlight.service';
+import {
+  ProgressSpinnerMode,
+  MatProgressSpinnerModule,
+} from '@angular/material/progress-spinner';
+import { MatListModule } from '@angular/material/list';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -58,8 +63,10 @@ import {
     ModalHeaderComponent,
     ModalBodyComponent,
     ModalFooterComponent,
+    MatProgressSpinnerModule,
+    MatListModule,
   ],
-  providers: [],
+  providers: [HighlightService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
