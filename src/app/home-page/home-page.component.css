@@ -44,3 +44,20 @@
  .content {
      height: 93.7%;
  }
+
+ .subHeader {
+     font-weight: bold;
+ }
+
+ /* Style the embedded code editor */
+ #jdoodleEditor .editor-header {
+     background-color: red;
+     padding: 10px;
+ }
+
+ #jdoodleEditor .editor-content {
+     background-color: #fff;
+     border: 1px solid #ccc;
+     padding: 10px;
+     font-family: 'Courier New', monospace;
+ }

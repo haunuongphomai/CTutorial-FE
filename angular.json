@@ -66,6 +66,9 @@
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "src/proxy.ts"
+          },
           "configurations": {
             "production": {
               "browserTarget": "CTutorial-FE:build:production"

@@ -24,15 +24,14 @@
                             </h3>
                         </div>
                         <div *ngFor="let p2 of p.lessons" class="mt-2">
-                            <p class="item-nav p-2">{{p2.lessonName}}</p>
+                            <p class="item-nav p-2" (click)="showLesson(p2.lessonId)">{{p2.lessonName}}</p>
                         </div>
                     </div>
-
                 </div>
             </mat-drawer>
             <mat-drawer-content>
                 <div class="container-xxl mt-3 d-flex justify-content-center">
-                    <c-carousel [dark]="true" [wrap]="false" class="w-75 justify">
+                    <c-carousel [dark]="true" *ngIf="!isHideSlides" [wrap]="false" class="w-75 justify">
                         <c-carousel-inner>
                             <c-carousel-item *ngFor="let slide of slides; index as i;">
                                 <div class="row border border-secondary intro">
@@ -50,12 +49,51 @@
                         <c-carousel-control [routerLink] caption="Next" direction="next"></c-carousel-control>
                     </c-carousel>
                 </div>
-                <div class="container-xxl d-flex justify-content-center">
-                    <div class="w-75 p-5 justify border" [innerHTML]="htmlToAdd"> </div>
+                <div class="container-xxl justify-content-center mt-5" *ngIf="subHeader">
+                    <h1 class="w-100 subHeader justify" [innerHTML]="subHeader"> </h1>
+                </div>
+                <div class="container-xxl justify-content-center border mb-5" *ngIf="subContent">
+                    <div class="w-100 mt-4 p-3 justify" [innerHTML]="subContent"> </div>
+                </div>
+
+                <form (submit)="compileCode()">
+                    <textarea [(ngModel)]="cCode" name="code"></textarea>
+                    <button type="submit">Compile & Run</button>
+                </form>
+                <pre>{{ output }}</pre>
+
+                <button (click)="callGpt()">Call GPT API</button>
+                <div *ngIf="response">
+                    <h3>Response from GPT:</h3>
+                    <p>{{ response }}</p>
+                </div>
+                <div *ngIf="isCompile">
+                    <mat-spinner></mat-spinner>
+                </div>
+                <div class="position-fixed end-0 bottom-0 m-5">
+                    <button mat-fab color="primary" aria-label=" Ask GPT">
+                        <mat-icon>message</mat-icon>
+                    </button>
                 </div>
             </mat-drawer-content>
         </mat-drawer-container>
     </div>
+
+    <!-- <div style="min-height: 130px;" class="d-flex flex-row-reverse">
+        <c-card [visible]="visibleMsg" cCollapse horizontal class="shadow" style="max-width: 260px;">
+            <c-card-body style="width: 260px;">
+                This is some placeholder content for a horizontal collapse. It's hidden by default and shown when
+                triggered.
+            </c-card-body>
+        </c-card>
+    </div>
+    &nbsp; -->
+    <!-- <div class="d-flex flex-row-reverse">
+        <button (click)="toggleCollapse()" cButton class="   mb-3" color="primary"
+            [attr.aria-expanded]="visibleMsg"><img
+                src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/chatgpt-icon.png"
+                style="width: 50px; height: auto;"></button>
+    </div> -->
 
     <c-modal [visible]="visible">
         <c-modal-header>
@@ -69,4 +107,5 @@
             <button cButton (click)="acceptLogout()" class="btn btn-primary">Đồng ý</button>
         </c-modal-footer>
     </c-modal>
+    <block-ui></block-ui>
 </div>

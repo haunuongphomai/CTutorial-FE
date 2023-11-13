@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
-import { MatDrawerMode } from '@angular/material/sidenav';
+import { BlockUI, BlockUIModule, NgBlockUI } from 'ng-block-ui';
+import { Component, NgModule, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HomePageService } from '../services/homepage.service';
-import { HighlightService } from '../services/highlight.service';
+import { CComplierService } from '../services/c.complier.service';
+import { GptService } from '../services/gpt.service';
+import { CollapseModule } from '@coreui/angular';
 
 @Component({
   selector: 'app-home-page',
@@ -11,6 +12,8 @@ import { HighlightService } from '../services/highlight.service';
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent implements OnInit {
+  @BlockUI() blockUI: NgBlockUI | undefined;
+
   slides: any[] = new Array(3).fill({
     id: -1,
     src: '',
@@ -20,31 +23,27 @@ export class HomePageComponent implements OnInit {
   isAccept: any = false;
   highlighted: boolean = false;
   sections: any[] = [];
-  htmlToAdd: string =
-    // '<pre><code class="lang-c"> </code></pre>';
-    '<h2>Get Started With C</h2><p>To start using C, you need two things:</p><ul><li>A text editor, like Notepad, to write C code</li><li>A compiler, like GCC, to translate the C code into a language that the computer will understand</li></ul><p>There are many text editors and compilers to choose from. In this tutorial, we will use an&nbsp;<strong><em>IDE&nbsp;</em></strong>(see below).</p><h1>Example:</h1><pre><code class="lang-c">#include &lt;stdio.h&gt;\n\nint main() {\n  printf("Hello World!");\n  return 0;\n}\n</code></pre>';
+  contents: any = '';
+  subHeader: string = '';
+  subContent: string = '';
+  isHideSlides: boolean = false;
+  cCode: string = 'Code here';
+  output: string = '';
+  response: any;
+  isCompile: boolean = false;
+  visibleMsg = false;
 
   constructor(
     private route: Router,
     private home: HomePageService,
-    private highlightService: HighlightService
+    private cCompilerService: CComplierService,
+    private gptService: GptService
   ) {}
 
   public visible = false;
 
   closeDialog() {
     this.visible = !this.visible;
-  }
-
-  handleLiveDemoChange(event: any) {
-    this.visible = event;
-  }
-
-  ngAfterViewChecked() {
-    if (!this.highlighted) {
-      this.highlightService.highlightAll();
-      this.highlighted = true;
-    }
   }
 
   ngOnInit(): void {
@@ -68,8 +67,7 @@ export class HomePageComponent implements OnInit {
       subtitle:
         'Cung cấp trình biên dịch C hỗ trợ biên dịch mã đến từ người dùng.',
     };
-    this.getAllLessons();
-    this.highlightService.highlightAll();
+    this.getAllSections();
   }
 
   acceptLogout() {
@@ -85,13 +83,57 @@ export class HomePageComponent implements OnInit {
     this.visible = !this.visible;
   }
 
-  getAllLessons() {
-    this.home.getAllSectionsInfo().subscribe({
+  getAllSections() {
+    this.home.getAllSections().subscribe({
       next: (res) => {
         if (res) {
           this.sections = res;
         }
       },
     });
+  }
+
+  showLesson(id: any) {
+    this.isHideSlides = true;
+    this.home.getLessonsById(id).subscribe({
+      next: (res) => {
+        if (res.lessonDetails.length && res.lessonDetails.length > 0) {
+          this.contents = res;
+          this.subHeader =
+            this.contents.lessonDetails[0].lessonDetailDescription;
+          this.subContent =
+            this.contents.lessonDetails[0].partOfLesson[0].subContent;
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  compileCode() {
+    this.isCompile = true;
+    this.blockUI?.start();
+    this.cCompilerService.compile(this.cCode).subscribe((res: any) => {
+      this.output = res.output;
+      this.isCompile = false;
+      this.blockUI?.stop();
+    });
+  }
+
+  callGpt() {
+    this.isCompile = true;
+    this.blockUI?.start();
+    const prompt = 'The meaning of the number 369';
+
+    this.gptService.callGptAPI(prompt).subscribe((data) => {
+      this.response = data.choices[0].message.content;
+      this.isCompile = false;
+      this.blockUI?.stop();
+    });
+  }
+
+  toggleCollapse(): void {
+    this.visibleMsg = !this.visibleMsg;
   }
 }

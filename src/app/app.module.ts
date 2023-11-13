@@ -11,7 +11,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatIconModule } from '@angular/material/icon';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { MatSidenavModule } from '@angular/material/sidenav';
@@ -22,18 +22,24 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   AlertModule,
+  CardBodyComponent,
+  CardComponent,
+  CardFooterComponent,
+  CardHeaderComponent,
+  CardModule,
   CarouselModule,
+  CollapseModule,
   ModalBodyComponent,
   ModalComponent,
   ModalFooterComponent,
   ModalHeaderComponent,
 } from '@coreui/angular';
-import { HighlightService } from './services/highlight.service';
 import {
   ProgressSpinnerMode,
   MatProgressSpinnerModule,
 } from '@angular/material/progress-spinner';
 import { MatListModule } from '@angular/material/list';
+import { BlockUIModule } from 'ng-block-ui';
 
 @NgModule({
   declarations: [
@@ -59,14 +65,17 @@ import { MatListModule } from '@angular/material/list';
     MatTooltipModule,
     AlertModule,
     CarouselModule,
+    CollapseModule,
+    CardModule,
     ModalComponent,
     ModalHeaderComponent,
     ModalBodyComponent,
     ModalFooterComponent,
     MatProgressSpinnerModule,
     MatListModule,
+    FormsModule,
+    BlockUIModule.forRoot(),
   ],
-  providers: [HighlightService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
