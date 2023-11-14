@@ -1,4 +1,3 @@
-import { TooltipModule } from '@syncfusion/ej2-angular-popups';
 import { MatTabsModule } from '@angular/material/tabs';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
@@ -22,10 +21,6 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import {
   AlertModule,
-  CardBodyComponent,
-  CardComponent,
-  CardFooterComponent,
-  CardHeaderComponent,
   CardModule,
   CarouselModule,
   CollapseModule,
@@ -34,12 +29,10 @@ import {
   ModalFooterComponent,
   ModalHeaderComponent,
 } from '@coreui/angular';
-import {
-  ProgressSpinnerMode,
-  MatProgressSpinnerModule,
-} from '@angular/material/progress-spinner';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatListModule } from '@angular/material/list';
 import { BlockUIModule } from 'ng-block-ui';
+import { NbChatModule, NbThemeModule } from '@nebular/theme';
 
 @NgModule({
   declarations: [
@@ -75,6 +68,8 @@ import { BlockUIModule } from 'ng-block-ui';
     MatListModule,
     FormsModule,
     BlockUIModule.forRoot(),
+    NbThemeModule.forRoot(),
+    NbChatModule,
   ],
   bootstrap: [AppComponent],
 })

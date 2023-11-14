@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { HomePageService } from '../services/homepage.service';
 import { CComplierService } from '../services/c.complier.service';
 import { GptService } from '../services/gpt.service';
-import { CollapseModule } from '@coreui/angular';
+import { NbChatComponent } from '@nebular/theme';
 
 @Component({
   selector: 'app-home-page',
@@ -32,6 +32,7 @@ export class HomePageComponent implements OnInit {
   response: any;
   isCompile: boolean = false;
   visibleMsg = false;
+  messages: any[] = [];
 
   constructor(
     private route: Router,
@@ -135,5 +136,33 @@ export class HomePageComponent implements OnInit {
 
   toggleCollapse(): void {
     this.visibleMsg = !this.visibleMsg;
+  }
+
+  sendMessage(event: any) {
+    const files = !event.files
+      ? []
+      : event.files.map((file: any) => {
+          return {
+            url: file.src,
+            type: file.type,
+            icon: 'file-text-outline',
+          };
+        });
+
+    this.messages.push({
+      text: event.message,
+      date: new Date(),
+      reply: true,
+      type: files.length ? 'file' : 'text',
+      files: files,
+      user: {
+        name: 'Jonh Doe',
+        avatar: 'https://i.gifer.com/no.gif',
+      },
+    });
+    // const botReply = this.chatShowcaseService.reply(event.message);
+    // if (botReply) {
+    //   setTimeout(() => { this.messages.push(botReply) }, 500);
+    // }
   }
 }

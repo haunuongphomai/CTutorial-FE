@@ -71,13 +71,25 @@
                     <mat-spinner></mat-spinner>
                 </div>
                 <div class="position-fixed end-0 bottom-0 m-5">
-                    <button mat-fab color="primary" aria-label=" Ask GPT">
+                    <button mat-fab color aria-label=" Ask GPT" class="gptBtn">
                         <mat-icon>message</mat-icon>
                     </button>
                 </div>
             </mat-drawer-content>
         </mat-drawer-container>
     </div>
+
+    <nb-chat size="small">
+        <ng-template nbChatTitle [context]="{ text: 'some text to pass into template' }" let-data>
+            <div>Chat title content from template. Here is the text provided via context: "{{ data.text }}"</div>
+        </ng-template>
+
+        <nb-chat-message *ngFor="let msg of messages" [type]="msg.type" [message]="msg.text" [reply]="msg.reply"
+            [sender]="msg.user.name" [date]="msg.date" [files]="msg.files" [quote]="msg.quote" [latitude]="msg.latitude"
+            [longitude]="msg.longitude" [avatar]="msg.user.avatar">
+        </nb-chat-message>
+        <nb-chat-form (send)="sendMessage($event)" [dropFiles]="true"> </nb-chat-form>
+    </nb-chat>
 
     <!-- <div style="min-height: 130px;" class="d-flex flex-row-reverse">
         <c-card [visible]="visibleMsg" cCollapse horizontal class="shadow" style="max-width: 260px;">

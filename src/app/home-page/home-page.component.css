@@ -61,3 +61,12 @@
      padding: 10px;
      font-family: 'Courier New', monospace;
  }
+
+ .gptBtn {
+     background-color: black;
+ }
+
+ nb-chat {
+     width: 500px;
+     background-color: red;
+ }
