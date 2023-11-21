@@ -5,7 +5,16 @@
             <button mat-icon-button (click)="drawer.toggle()">
                 <mat-icon>menu</mat-icon>
             </button>
-            <h3>Xin chào, Hao!</h3>
+            <button mat-icon-button>
+                <mat-icon>home</mat-icon>
+                <a [routerLink]="['/home-page']">
+                </a>
+            </button>
+            <h3>Xin chào</h3>
+            <button mat-icon-button matTooltip="Đi đến phần bài tập" class="position-absolute top-0 end-0"
+                style="margin-right: 50px;" cButton>
+                <mat-icon class="mt-1">code</mat-icon>
+            </button>
             <button mat-icon-button (click)="logout()" matTooltip="Đăng xuất" class="position-absolute top-0 end-0"
                 cButton>
                 <mat-icon class="mt-1">exit_to_app</mat-icon>
@@ -17,13 +26,13 @@
             <mat-drawer #drawer [mode]="'side'" class="bg-dark bg-gradient bg-opacity-20 text-light">
                 <div class="h-100 mt-4">
                     <div *ngFor="let p of sections" class="side-nav">
-                        <div class="header mt-3">
+                        <div class="sections mt-3">
                             <h3>
                                 <i class="bi bi-book-fill"></i>
                                 {{p.sectionName}}
                             </h3>
                         </div>
-                        <div *ngFor="let p2 of p.lessons" class="mt-2">
+                        <div *ngFor="let p2 of p.lessons" class="mt-2 lessons">
                             <p class="item-nav p-2" (click)="showLesson(p2.lessonId)">{{p2.lessonName}}</p>
                         </div>
                     </div>
@@ -56,40 +65,44 @@
                     <div class="w-100 mt-4 p-3 justify" [innerHTML]="subContent"> </div>
                 </div>
 
-                <form (submit)="compileCode()">
+                <!-- <form (submit)="compileCode()">
                     <textarea [(ngModel)]="cCode" name="code"></textarea>
                     <button type="submit">Compile & Run</button>
                 </form>
-                <pre>{{ output }}</pre>
+                <pre>{{ output }}</pre> -->
 
-                <button (click)="callGpt()">Call GPT API</button>
-                <div *ngIf="response">
-                    <h3>Response from GPT:</h3>
-                    <p>{{ response }}</p>
-                </div>
                 <div *ngIf="isCompile">
                     <mat-spinner></mat-spinner>
                 </div>
+                <div class="position-fixed end-0 bottom-0 chatGpt" *ngIf="isChat">
+                    <nb-layout>
+                        <nb-layout-column>
+                            <nb-chat title="Chat" class="border" size="large">
+                                <nb-chat-message *ngFor="let msg of messages" [type]="msg.type" [message]="msg.text"
+                                    [reply]="msg.reply" [sender]="msg.user.name" [date]="msg.date" [files]="msg.files"
+                                    [quote]="msg.quote" [latitude]="msg.latitude" [longitude]="msg.longitude">
+                                </nb-chat-message>
+                                <nb-chat-form *ngIf="!isGen" (send)="sendMessage($event)" [dropFiles]="true">
+                                </nb-chat-form>
+                            </nb-chat>
+                            <nb-card *ngIf="isGen" [nbSpinner]="true" nbSpinnerStatus="success">
+                                <nb-card-body>
+                                    Chờ chút bạn nhé^^^
+                                </nb-card-body>
+                            </nb-card>
+                        </nb-layout-column>
+                    </nb-layout>
+                </div>
                 <div class="position-fixed end-0 bottom-0 m-5">
-                    <button mat-fab color aria-label=" Ask GPT" class="gptBtn">
-                        <mat-icon>message</mat-icon>
+                    <button mat-fab color aria-label=" Ask GPT" class="gptBtn" (click)="toggleGpt()">
+                        <mat-icon *ngIf="!isChat">message</mat-icon>
+                        <mat-icon *ngIf="isChat">close</mat-icon>
                     </button>
                 </div>
             </mat-drawer-content>
         </mat-drawer-container>
     </div>
 
-    <nb-chat size="small">
-        <ng-template nbChatTitle [context]="{ text: 'some text to pass into template' }" let-data>
-            <div>Chat title content from template. Here is the text provided via context: "{{ data.text }}"</div>
-        </ng-template>
-
-        <nb-chat-message *ngFor="let msg of messages" [type]="msg.type" [message]="msg.text" [reply]="msg.reply"
-            [sender]="msg.user.name" [date]="msg.date" [files]="msg.files" [quote]="msg.quote" [latitude]="msg.latitude"
-            [longitude]="msg.longitude" [avatar]="msg.user.avatar">
-        </nb-chat-message>
-        <nb-chat-form (send)="sendMessage($event)" [dropFiles]="true"> </nb-chat-form>
-    </nb-chat>
 
     <!-- <div style="min-height: 130px;" class="d-flex flex-row-reverse">
         <c-card [visible]="visibleMsg" cCollapse horizontal class="shadow" style="max-width: 260px;">

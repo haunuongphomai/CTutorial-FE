@@ -6,7 +6,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class GptService {
-  private apiKey = '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';
+  private apiKey = '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';
   private apiUrl = 'https://api.openai.com/v1/chat/completions';
 
   constructor(private http: HttpClient) {}
@@ -18,7 +18,7 @@ export class GptService {
     });
 
     const data = {
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-4',
       messages: [
         {
           role: 'user',

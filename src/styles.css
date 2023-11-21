@@ -2,7 +2,19 @@
 @import "~bootstrap-icons/font/bootstrap-icons.css";
 @import "~prismjs/plugins/toolbar/prism-toolbar.css";
 @import "~prismjs/themes/prism-okaidia";
+@import '~@nebular/theme/styles/prebuilt/default.css';
 
+
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 html,
 body {
@@ -14,12 +26,6 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-html,
-body {
-    height: 100%;
-}
-
-body {
-    margin: 0;
-    font-family: Roboto, "Helvetica Neue", sans-serif;
+.nb-theme-default nb-layout .layout {
+    background-color: transparent;
 }

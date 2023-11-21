@@ -32,7 +32,13 @@ import {
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatListModule } from '@angular/material/list';
 import { BlockUIModule } from 'ng-block-ui';
-import { NbChatModule, NbThemeModule } from '@nebular/theme';
+import {
+  NbCardModule,
+  NbChatModule,
+  NbLayoutModule,
+  NbSpinnerModule,
+  NbThemeModule,
+} from '@nebular/theme';
 
 @NgModule({
   declarations: [
@@ -70,6 +76,9 @@ import { NbChatModule, NbThemeModule } from '@nebular/theme';
     BlockUIModule.forRoot(),
     NbThemeModule.forRoot(),
     NbChatModule,
+    NbLayoutModule,
+    NbCardModule,
+    NbSpinnerModule,
   ],
   bootstrap: [AppComponent],
 })

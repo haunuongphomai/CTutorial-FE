@@ -1,10 +1,10 @@
+import { lessonsUrl } from './../../environments/environment.development';
 import { BlockUI, BlockUIModule, NgBlockUI } from 'ng-block-ui';
 import { Component, NgModule, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { HomePageService } from '../services/homepage.service';
 import { CComplierService } from '../services/c.complier.service';
 import { GptService } from '../services/gpt.service';
-import { NbChatComponent } from '@nebular/theme';
 
 @Component({
   selector: 'app-home-page',
@@ -33,6 +33,9 @@ export class HomePageComponent implements OnInit {
   isCompile: boolean = false;
   visibleMsg = false;
   messages: any[] = [];
+  isChat: boolean = false;
+  isGen: boolean = false;
+  newMsg: any;
 
   constructor(
     private route: Router,
@@ -69,6 +72,7 @@ export class HomePageComponent implements OnInit {
         'Cung cấp trình biên dịch C hỗ trợ biên dịch mã đến từ người dùng.',
     };
     this.getAllSections();
+    this.getMessage();
   }
 
   acceptLogout() {
@@ -122,16 +126,18 @@ export class HomePageComponent implements OnInit {
     });
   }
 
-  callGpt() {
-    this.isCompile = true;
-    this.blockUI?.start();
-    const prompt = 'The meaning of the number 369';
+  toggleGpt() {
+    this.isChat = !this.isChat;
 
-    this.gptService.callGptAPI(prompt).subscribe((data) => {
-      this.response = data.choices[0].message.content;
-      this.isCompile = false;
-      this.blockUI?.stop();
-    });
+    // this.isCompile = true;
+    // this.blockUI?.start();
+    // const prompt = 'The meaning of the number 369';
+
+    // this.gptService.callGptAPI(prompt).subscribe((data) => {
+    //   this.response = data.choices[0].message.content;
+    //   this.isCompile = false;
+    //   this.blockUI?.stop();
+    // });
   }
 
   toggleCollapse(): void {
@@ -139,6 +145,8 @@ export class HomePageComponent implements OnInit {
   }
 
   sendMessage(event: any) {
+    this.isGen = true;
+
     const files = !event.files
       ? []
       : event.files.map((file: any) => {
@@ -153,16 +161,42 @@ export class HomePageComponent implements OnInit {
       text: event.message,
       date: new Date(),
       reply: true,
-      type: files.length ? 'file' : 'text',
-      files: files,
       user: {
-        name: 'Jonh Doe',
-        avatar: 'https://i.gifer.com/no.gif',
+        name: 'You',
       },
     });
-    // const botReply = this.chatShowcaseService.reply(event.message);
-    // if (botReply) {
-    //   setTimeout(() => { this.messages.push(botReply) }, 500);
-    // }
+
+    this.gptService.callGptAPI(event.message).subscribe((data) => {
+      if (data) {
+        this.isGen = false;
+        this.messages.push({
+          text: data.choices[0].message.content,
+          // text: 'test',
+          date: new Date(),
+          reply: false,
+          user: {
+            name: 'Chat GPT',
+          },
+        });
+        localStorage.setItem('message', JSON.stringify(this.messages));
+      }
+    });
+  }
+
+  getMessage() {
+    const oldMsg: any = localStorage.getItem('message');
+    if (oldMsg && oldMsg.length > 0) {
+      this.newMsg = JSON.parse(oldMsg);
+      Object.keys(this.newMsg).forEach((x) => {
+        this.messages.push({
+          text: this.newMsg[x].text,
+          date: this.newMsg[x].date,
+          reply: this.newMsg[x].reply,
+          user: {
+            name: this.newMsg[x].user.name,
+          },
+        });
+      });
+    }
   }
 }
