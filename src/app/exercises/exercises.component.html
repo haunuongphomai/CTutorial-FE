@@ -1,0 +1,42 @@
+<div class="h-100 w-100 .bg-dark">
+    <div class="w-100 h-100 p-4 rounded bg-dark bg-gradient bg-opacity-90 text-white">
+        <mat-drawer-container class="h-100 d-inline-block">
+            <mat-drawer #drawer [mode]="'side'" class="rounded bg-light bg-gradient text-dark" opened>
+                <div class="w-100 position-relative rounded header mt-2">
+                    <button mat-icon-button class="position-absolute top-0 start-0 m-2" [routerLink]="['/home-page']">
+                        <mat-icon>home</mat-icon>
+                    </button>
+                    <h2 class="position-absolute top-0 start-50 translate-middle mt-4">Bài tập</h2>
+                </div>
+                <div class="shadow-sm border-top" *ngFor="let ex of exercises">
+                    <mat-accordion class="w-100 d-flex justify-content-start">
+                        <mat-expansion-panel #panel>
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>
+                                    <h3>
+                                        {{ex.exerciseTitle}}
+                                    </h3>
+                                </mat-panel-title>
+                            </mat-expansion-panel-header>
+                            <div class="mt-2 d-flex task" *ngFor="let task of ex.exerciseTasks">
+                                <h4 class="w-100 p-2">{{task.taskTitle}}</h4>
+                                <img *ngIf="task.passed" class="tick-icon "
+                                    src="https://cdn-icons-png.flaticon.com/128/4315/4315445.png" alt="">
+                            </div>
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </div>
+            </mat-drawer>
+            <mat-drawer-content class="p-2">
+                <button mat-icon-button (click)="drawer.toggle()">
+                    <mat-icon *ngIf="!drawer.opened">arrow_forward_ios</mat-icon>
+                    <mat-icon *ngIf="drawer.opened">arrow_back_ios</mat-icon>
+                </button>
+                <div class="row">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-8"></div>
+                </div>
+            </mat-drawer-content>
+        </mat-drawer-container>
+    </div>
+</div>

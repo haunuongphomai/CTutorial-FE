@@ -5,14 +5,9 @@
             <button mat-icon-button (click)="drawer.toggle()">
                 <mat-icon>menu</mat-icon>
             </button>
-            <button mat-icon-button>
-                <mat-icon>home</mat-icon>
-                <a [routerLink]="['/home-page']">
-                </a>
-            </button>
-            <h3>Xin chào</h3>
+            <h3>Xin chào {{userName}} !</h3>
             <button mat-icon-button matTooltip="Đi đến phần bài tập" class="position-absolute top-0 end-0"
-                style="margin-right: 50px;" cButton>
+                style="margin-right: 50px;" [routerLink]="['/exercises']">
                 <mat-icon class="mt-1">code</mat-icon>
             </button>
             <button mat-icon-button (click)="logout()" matTooltip="Đăng xuất" class="position-absolute top-0 end-0"
@@ -23,7 +18,7 @@
     </div>
     <div class="w-100 content">
         <mat-drawer-container>
-            <mat-drawer #drawer [mode]="'side'" class="bg-dark bg-gradient bg-opacity-20 text-light">
+            <mat-drawer #drawer [mode]="'side'" class="bg-dark bg-gradient bg-opacity-20">
                 <div class="h-100 mt-4">
                     <div *ngFor="let p of sections" class="side-nav">
                         <div class="sections mt-3">

@@ -39,6 +39,8 @@ import {
   NbSpinnerModule,
   NbThemeModule,
 } from '@nebular/theme';
+import { ExercisesComponent } from './exercises/exercises.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
@@ -47,6 +49,7 @@ import {
     SignUpComponent,
     LandingPageComponent,
     HomePageComponent,
+    ExercisesComponent,
   ],
   imports: [
     BrowserModule,
@@ -79,6 +82,7 @@ import {
     NbLayoutModule,
     NbCardModule,
     NbSpinnerModule,
+    MatExpansionModule,
   ],
   bootstrap: [AppComponent],
 })

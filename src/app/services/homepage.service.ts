@@ -17,8 +17,6 @@ export class HomePageService {
 
   getLessonsById(id: any) {
     // return this.http.get<any>(`${lessonsUrl}GetLessonById/`, id);
-    return this.http.get<any>(
-      `https://localhost:7096/api/Lessons/GetLessonById/` + id
-    );
+    return this.http.get<any>(`${lessonsUrl}` + id);
   }
 }

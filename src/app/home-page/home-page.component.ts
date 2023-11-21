@@ -14,6 +14,7 @@ import { GptService } from '../services/gpt.service';
 export class HomePageComponent implements OnInit {
   @BlockUI() blockUI: NgBlockUI | undefined;
 
+  userName: any;
   slides: any[] = new Array(3).fill({
     id: -1,
     src: '',
@@ -51,6 +52,10 @@ export class HomePageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    let a: any = localStorage.getItem('userName');
+    // this.userName = JSON.parse(a);
+    const b = JSON.parse(a);
+    this.userName = b.userName;
     this.slides[0] = {
       id: 0,
       src: 'https://codelearn.io/Themes/TheCodeCampPro/Resources/Images/landing-v2/hoc-lap-trinh.png',

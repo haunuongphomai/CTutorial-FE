@@ -35,6 +35,13 @@ export class SignInComponent implements OnInit {
               'currentUser',
               JSON.stringify({ token: res.token })
             );
+
+            localStorage.setItem(
+              'userName',
+              JSON.stringify({
+                userName: this.loginForm.controls['username'].value,
+              })
+            );
             this.toastr.success('Đăng nhập thành công', 'Thông báo', {
               timeOut: 1000,
               positionClass: 'toast-bottom-right',

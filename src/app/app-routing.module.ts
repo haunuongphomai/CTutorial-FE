@@ -5,6 +5,7 @@ import { SignUpComponent } from './sign-up/sign-up.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { HomePageComponent } from './home-page/home-page.component';
 import { authGuardGuard } from './shared/auth-guard.guard';
+import { ExercisesComponent } from './exercises/exercises.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -16,6 +17,11 @@ const routes: Routes = [
   {
     path: 'home-page',
     component: HomePageComponent,
+    canActivate: [authGuardGuard],
+  },
+  {
+    path: 'exercises',
+    component: ExercisesComponent,
     canActivate: [authGuardGuard],
   },
 ];

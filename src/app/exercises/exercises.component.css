@@ -1,0 +1,61 @@
+.toolbar {
+    background-color: black;
+    opacity: 0.8;
+}
+
+.toolbar h3 {
+    font-size: 15px;
+    color: white;
+    margin-top: 16px;
+}
+
+header {
+    margin: 20px 0px 0px 20px;
+}
+
+mat-drawer {
+    min-width: 500px;
+}
+
+mat-drawer .header {
+    height: 10%;
+}
+
+mat-expansion-panel {
+    padding: 15px;
+}
+
+mat-expansion-panel-header {
+    padding: 0;
+}
+
+mat-panel-title {
+    font-size: 15px;
+    margin-left: 20px;
+}
+
+mat-panel-title h3 {
+    font-size: 18px !important;
+}
+
+.tick-icon {
+    width: 15px;
+    height: 15px;
+    margin-left: 5px;
+    margin-top: 15px;
+}
+
+.task {
+    margin-left: 10px;
+}
+
+.task h4 {
+    font-size: 15px !important;
+}
+
+
+.task h4:hover {
+    background-color: black;
+    color: white;
+    border-radius: 10px;
+}
