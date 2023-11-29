@@ -12,8 +12,6 @@ import { GptService } from '../services/gpt.service';
   styleUrls: ['./home-page.component.css'],
 })
 export class HomePageComponent implements OnInit {
-  @BlockUI() blockUI: NgBlockUI | undefined;
-
   userName: any;
   slides: any[] = new Array(3).fill({
     id: -1,
@@ -22,14 +20,13 @@ export class HomePageComponent implements OnInit {
     subtitle: '',
   });
   isAccept: any = false;
-  highlighted: boolean = false;
   sections: any[] = [];
   contents: any = '';
   subHeader: string = '';
   subContent: string = '';
   isHideSlides: boolean = false;
   cCode: string = 'Code here';
-  output: string = '';
+
   response: any;
   isCompile: boolean = false;
   visibleMsg = false;
@@ -37,11 +34,13 @@ export class HomePageComponent implements OnInit {
   isChat: boolean = false;
   isGen: boolean = false;
   newMsg: any;
+  subTitle = 'Tiến độ hoàn thành bài tập';
+  percent = 0;
+  maxPercent = 0;
 
   constructor(
     private route: Router,
     private home: HomePageService,
-    private cCompilerService: CComplierService,
     private gptService: GptService
   ) {}
 
@@ -78,6 +77,7 @@ export class HomePageComponent implements OnInit {
     };
     this.getAllSections();
     this.getMessage();
+    this.getTaskState();
   }
 
   acceptLogout() {
@@ -121,28 +121,8 @@ export class HomePageComponent implements OnInit {
     });
   }
 
-  compileCode() {
-    this.isCompile = true;
-    this.blockUI?.start();
-    this.cCompilerService.compile(this.cCode).subscribe((res: any) => {
-      this.output = res.output;
-      this.isCompile = false;
-      this.blockUI?.stop();
-    });
-  }
-
   toggleGpt() {
     this.isChat = !this.isChat;
-
-    // this.isCompile = true;
-    // this.blockUI?.start();
-    // const prompt = 'The meaning of the number 369';
-
-    // this.gptService.callGptAPI(prompt).subscribe((data) => {
-    //   this.response = data.choices[0].message.content;
-    //   this.isCompile = false;
-    //   this.blockUI?.stop();
-    // });
   }
 
   toggleCollapse(): void {
@@ -203,5 +183,14 @@ export class HomePageComponent implements OnInit {
         });
       });
     }
+  }
+
+  getTaskState() {
+    this.home.getTaskState(this.userName).subscribe((res: any) => {
+      if (res) {
+        this.percent = res.numberOfCompletedTasks;
+        this.maxPercent = res.totalNumberOfTasks;
+      }
+    });
   }
 }

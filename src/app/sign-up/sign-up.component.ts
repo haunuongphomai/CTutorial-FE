@@ -48,7 +48,7 @@ export class SignUpComponent implements OnInit {
       }
       this.auth.signUp(this.registerForm.value).subscribe({
         next: (res) => {
-          if (res && res.data) {
+          if (res) {
             this.toastr.success('Đăng kí thành công', 'Thông báo', {
               timeOut: 1000,
               positionClass: 'toast-bottom-right',

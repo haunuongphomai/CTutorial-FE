@@ -9,12 +9,17 @@
     margin-top: 16px;
 }
 
+.mat-drawer-container {
+    height: 100%;
+}
+
 header {
     margin: 20px 0px 0px 20px;
 }
 
 mat-drawer {
-    min-width: 500px;
+    min-width: 380px;
+    max-width: 380px;
 }
 
 mat-drawer .header {
@@ -36,6 +41,7 @@ mat-panel-title {
 
 mat-panel-title h3 {
     font-size: 18px !important;
+    width: 340px;
 }
 
 .tick-icon {
@@ -58,4 +64,61 @@ mat-panel-title h3 {
     background-color: black;
     color: white;
     border-radius: 10px;
+}
+
+.content {
+    height: 100%;
+}
+
+.taskDescription {
+    min-height: 100%;
+}
+
+.headerPanel {
+    padding: 0;
+}
+
+.headerPanel header {
+    width: 100%;
+    margin: 0 !important;
+    background-color: #1F2937;
+}
+
+.headerPanel header h2 {
+    width: 100%;
+    margin-left: 20px;
+}
+
+.runBtn {
+    margin-right: 50px;
+}
+
+.codeContainer {
+    min-height: 600px;
+    max-height: 600px;
+}
+
+/* styles.css or your component's style file */
+
+/* Set a fixed height for the code editor */
+.ngs-code-editor {
+    height: 595px;
+    max-height: 595px;
+    min-height: 595px;
+    overflow: auto;
+}
+
+.terminal {
+    height: 242px;
+    margin: 0px 9px 0px 9px;
+    overflow: auto;
+}
+
+.terminal p {
+    white-space: pre-line;
+}
+
+.taskPanel {
+    max-height: 432px;
+    overflow-y: auto;
 }

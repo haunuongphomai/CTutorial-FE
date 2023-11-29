@@ -1,6 +1,6 @@
 <div class="h-100 w-100 .bg-dark">
-    <div class="w-100 h-100 p-4 rounded bg-dark bg-gradient bg-opacity-90 text-white">
-        <mat-drawer-container class="h-100 d-inline-block">
+    <div class="w-100 p-4 rounded bg-dark bg-gradient bg-opacity-90 text-white content">
+        <mat-drawer-container>
             <mat-drawer #drawer [mode]="'side'" class="rounded bg-light bg-gradient text-dark" opened>
                 <div class="w-100 position-relative rounded header mt-2">
                     <button mat-icon-button class="position-absolute top-0 start-0 m-2" [routerLink]="['/home-page']">
@@ -10,31 +10,80 @@
                 </div>
                 <div class="shadow-sm border-top" *ngFor="let ex of exercises">
                     <mat-accordion class="w-100 d-flex justify-content-start">
-                        <mat-expansion-panel #panel>
+                        <mat-expansion-panel [expanded]="false">
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                    <h3>
+                                    <h3 class="fw-bold">
                                         {{ex.exerciseTitle}}
                                     </h3>
                                 </mat-panel-title>
                             </mat-expansion-panel-header>
                             <div class="mt-2 d-flex task" *ngFor="let task of ex.exerciseTasks">
-                                <h4 class="w-100 p-2">{{task.taskTitle}}</h4>
+                                <h4 (click)="getTaskById(task.taskId)" class="w-100 p-2 border-bottom">
+                                    {{task.taskTitle}}</h4>
                                 <img *ngIf="task.passed" class="tick-icon "
-                                    src="https://cdn-icons-png.flaticon.com/128/4315/4315445.png" alt="">
+                                    src="https://cdn-icons-png.flaticon.com/128/4315/4315445.png">
                             </div>
                         </mat-expansion-panel>
                     </mat-accordion>
                 </div>
             </mat-drawer>
-            <mat-drawer-content class="p-2">
-                <button mat-icon-button (click)="drawer.toggle()">
+            <mat-drawer-content>
+                <button class="position-fixed" mat-icon-button (click)="drawer.toggle()">
                     <mat-icon *ngIf="!drawer.opened">arrow_forward_ios</mat-icon>
                     <mat-icon *ngIf="drawer.opened">arrow_back_ios</mat-icon>
                 </button>
-                <div class="row">
-                    <div class="col-md-4"></div>
-                    <div class="col-md-8"></div>
+                <div *ngIf="taskTitle || descriptionTask || codeTemplate" class="container-xxl h-100 d-flex exPanel">
+                    <div class="row w-100 bg-light text-dark rounded">
+                        <div class="col-md-4 border taskDescription rounded taskPanel">
+                            <h2 class="p-3" *ngIf="taskTitle">{{taskTitle}}</h2>
+                            <div [innerHTML]="descriptionTask" class="container-xxl justify-content-center"
+                                *ngIf="descriptionTask">
+                            </div>
+                            <div [innerHTML]="codeTemplate" class="container-xxl justify-content-center"
+                                *ngIf="codeTemplate">
+                            </div>
+                        </div>
+                        <div class="col-md-8 bg-dark text-white rounded-right headerPanel">
+                            <header class="d-flex flex-row-reverse">
+                                <button (click)="compileCode()" mat-button [disabled]="isCompile || disableCompile"
+                                    color="primary" class="bg-light m-2">Nộp bài
+                                    <mat-icon>check_circle</mat-icon>
+                                </button>
+                                <button mat-button (click)="compileCodeTest()" [disabled]="isCompile || disableCompile"
+                                    color="primary" class="bg-light m-2">Chạy thử
+                                    <mat-icon>play_circle_filled</mat-icon>
+                                </button>
+                            </header>
+                            <div class="m-2 border codeContainer">
+                                <ngs-code-editor [theme]="theme" [codeModel]="codeModel" [options]="options"
+                                    (valueChanged)="onCodeChanged($event)">
+                                </ngs-code-editor>
+                            </div>
+                            <div class="border terminal p-2">
+                                <div *ngIf="taskInput" class="form-floating mb-3 text-dark">
+                                    <input [(ngModel)]="stdin" type="text" class="form-control" id="floatingInput"
+                                        placeholder="Gán giá trị cho biến">
+                                    <label for="floatingInput">Gán giá trị cho biến</label>
+                                </div>
+                                <p>
+                                    <strong class="text-white">
+                                        Đầu ra mong muốn:
+                                    </strong>
+                                </p>
+                                <p class="text-white">"{{codeRes}}"</p>
+                                <p *ngIf="output">
+                                    <strong class="text-white">
+                                        Đầu ra thực tế:
+                                    </strong>
+                                </p>
+                                <p *ngIf="codeRes == output && output" class="text-success text-white">{{output}}</p>
+                                <p *ngIf="codeRes != output && output" class="text-danger">"{{output}}"</p>
+                                <p class="text-success" *ngIf="codeRes == output && output">Đúng</p>
+                                <p class="text-danger" *ngIf="codeRes != output && output">Sai</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </mat-drawer-content>
         </mat-drawer-container>

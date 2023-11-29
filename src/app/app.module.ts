@@ -28,6 +28,7 @@ import {
   ModalComponent,
   ModalFooterComponent,
   ModalHeaderComponent,
+  ProgressModule,
 } from '@coreui/angular';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatListModule } from '@angular/material/list';
@@ -41,6 +42,8 @@ import {
 } from '@nebular/theme';
 import { ExercisesComponent } from './exercises/exercises.component';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { CodeEditorModule } from '@ngstack/code-editor';
+import { NgCircleProgressModule } from 'ng-circle-progress';
 
 @NgModule({
   declarations: [
@@ -83,6 +86,19 @@ import { MatExpansionModule } from '@angular/material/expansion';
     NbCardModule,
     NbSpinnerModule,
     MatExpansionModule,
+    CodeEditorModule.forRoot(),
+    NgCircleProgressModule.forRoot({
+      backgroundColor: '#F1F1F1',
+      backgroundPadding: -18,
+      radius: 60,
+      toFixed: 2,
+      outerStrokeWidth: 10,
+      outerStrokeColor: '#FF6347',
+      innerStrokeColor: '#32CD32',
+      innerStrokeWidth: 1,
+      startFromZero: false,
+    }),
+    ProgressModule,
   ],
   bootstrap: [AppComponent],
 })
